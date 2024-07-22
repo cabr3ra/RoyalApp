@@ -1,0 +1,77 @@
+[
+  {
+    "name": "Alemania",
+    "abbreviation": "GER",
+    "imageUrl": "nationalities/0.png"
+  },
+  {
+    "name": "Argentina",
+    "abbreviation": "ARG",
+    "imageUrl": "nationalities/1.png"
+  },
+  {
+    "name": "España",
+    "abbreviation": "ESP",
+    "imageUrl": "nationalities/2.png"
+  },
+  {
+    "name": "México",
+    "abbreviation": "MEX",
+    "imageUrl": "nationalities/3.png"
+  },
+  {
+    "name": "Francia",
+    "abbreviation": "FRA",
+    "imageUrl": "nationalities/4.png"
+  },
+  {
+    "name": "Colombia",
+    "abbreviation": "COL",
+    "imageUrl": "nationalities/5.png"
+  },
+  {
+    "name": "Italia",
+    "abbreviation": "ITA",
+    "imageUrl": "nationalities/6.png"
+  },
+  {
+    "name": "Brasil",
+    "abbreviation": "BRA",
+    "imageUrl": "nationalities/7.png"
+  },
+  {
+    "name": "Venezuela",
+    "abbreviation": "VEN",
+    "imageUrl": "nationalities/8.png"
+  },
+  {
+    "name": "Nigeria",
+    "abbreviation": "NGA",
+    "imageUrl": "nationalities/9.png"
+  },
+  {
+    "name": "Marruecos",
+    "abbreviation": "MAR",
+    "imageUrl": "nationalities/10.png"
+  },
+  {
+    "name": "Chile",
+    "abbreviation": "CHI",
+    "imageUrl": "nationalities/11.png"
+  },
+  {
+    "name": "Uruguay",
+    "abbreviation": "URU",
+    "imageUrl": "nationalities/12.png"
+  },
+  {
+    "name": "Perú",
+    "abbreviation": "PER",
+    "imageUrl": "nationalities/13.png"
+  },
+  {
+    "name": "Costa Rica",
+    "abbreviation": "CRC",
+    "imageUrl": "nationalities/14.png"
+  }
+]

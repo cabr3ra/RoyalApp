@@ -1,0 +1,118 @@
+[
+  {
+    "name": "JOSE",
+    "surname": "SEGOVIA",
+    "nationality": "2",
+    "actual_team": "3",
+    "position": "0",
+    "date_of_birth": "1991-04-13",
+    "dorsal": 13,
+    "height": 183,
+    "career": {
+      "23/24": {
+        "splits": [
+          "9",
+          "3",
+          "3"
+        ],
+        "kings_cup": "Jijantes FC"
+      },
+      "24/25": {
+        "splits": [
+          "3",
+          ""
+        ],
+        "kings_world_cup": "Jijantes FC",
+        "kings_cup": ""
+      }
+    },
+    "imageUrl": "players/jose_segovia.png"
+  },
+  {
+    "name": "MARC",
+    "surname": "PELAZ",
+    "nationality": "2",
+    "actual_team": "3",
+    "position": "2",
+    "date_of_birth": "2003-09-19",
+    "dorsal": 8,
+    "height": 181,
+    "career": {
+      "23/24": {
+        "splits": [
+          "1",
+          "5",
+          "3"
+        ],
+        "kings_cup": "Los Troncos FC"
+      },
+      "24/25": {
+        "splits": [
+          "3",
+          ""
+        ],
+        "kings_world_cup": "Jijantes FC",
+        "kings_cup": ""
+      }
+    },
+    "imageUrl": "players/marc_pelaz.png"
+  },
+  {
+    "name": "CRISTIAN",
+    "surname": "UBON",
+    "nationality": "2",
+    "actual_team": "6",
+    "position": "2",
+    "date_of_birth": "2001-04-23",
+    "dorsal": 10,
+    "height": 176,
+    "career": {
+      "23/24": {
+        "splits": [
+          "11",
+          "6",
+          "6"
+        ],
+        "kings_cup": "Ultimate Móstoles"
+      },
+      "24/25": {
+        "splits": [
+          "6",
+          ""
+        ],
+        "kings_world_cup": "Ultimate Móstoles",
+        "kings_cup": ""
+      }
+    },
+    "imageUrl": "players/cristian_ubon.png"
+  },
+  {
+    "name": "SERGI",
+    "surname": "AGUILAR",
+    "nationality": "2",
+    "actual_team": "8",
+    "position": "0",
+    "date_of_birth": "1995-06-08",
+    "dorsal": 25,
+    "height": 184,
+    "career": {
+      "23/24": {
+        "splits": [
+          "9",
+          "11",
+          "8"
+        ],
+        "kings_cup": "Kunisports"
+      },
+      "24/25": {
+        "splits": [
+          "8",
+          ""
+        ],
+        "kings_world_cup": "Kunisports",
+        "kings_cup": ""
+      }
+    },
+    "imageUrl": "players/sergi_aguilar.png"
+  }
+]

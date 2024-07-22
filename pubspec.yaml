@@ -1,0 +1,41 @@
+name: royal_app
+description: "Royal App is an exciting mobile platform designed for soccer enthusiasts and followers of the Kings and Queens League."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.3.4 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  provider: ^6.1.2
+  firebase_core: ^3.1.0
+  cloud_firestore: ^5.0.1
+  firebase_auth: ^5.1.0
+  firebase_storage: ^12.0.1
+  shared_preferences: ^2.0.11
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/firestore/json/nationalities.json
+    - assets/firestore/json/players.json
+    - assets/firestore/json/positions.json
+    - assets/firestore/json/teams.json
+    - assets/firestore/update_nationalities.js
+    - assets/firestore/update_players.js
+    - assets/firestore/update_positions.js
+    - assets/firestore/update_teams.js
+    - assets/widgets/perfil.png
+    - assets/widgets/player.png
+    - assets/widgets/profile.png
+    - assets/widgets/ranking.png
+    - assets/widgets/search_player.png
+    - assets/widgets/settings.png
+    - assets/logo.png
