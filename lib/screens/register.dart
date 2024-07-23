@@ -23,11 +23,11 @@ class Register extends StatelessWidget {
               _buildLogo(),
               const SizedBox(height: 80),
               _buildEmailTextField(),
-              const SizedBox(height: 10),
+              const SizedBox(height: 20),
               _buildPasswordTextField(),
-              const SizedBox(height: 20),
+              const SizedBox(height: 40),
               _buildRegisterButton(context),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               _buildLoginTextButton(context),
             ],
           ),
@@ -40,15 +40,16 @@ class Register extends StatelessWidget {
     return Center(
       child: Image.asset(
         'assets/logo.png',
-        width: 200,
-        height: 200,
+        width: 150,
+        height: 150,
       ),
     );
   }
 
   SizedBox _buildEmailTextField() {
     return SizedBox(
-      width: 300, // Ancho fijo para el TextField
+      width: 250,
+      height: 40,
       child: TextField(
         controller: emailController,
         decoration: InputDecoration(
@@ -69,7 +70,8 @@ class Register extends StatelessWidget {
 
   SizedBox _buildPasswordTextField() {
     return SizedBox(
-      width: 300, // Ancho fijo para el TextField
+      width: 250,
+      height: 40,
       child: TextField(
         controller: passwordController,
         decoration: InputDecoration(

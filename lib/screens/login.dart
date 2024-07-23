@@ -15,19 +15,19 @@ class Login extends StatelessWidget {
       body: Container(
         color: AppColors.colorPrimary,
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(6.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center, // Cambiado de stretch a center
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               _buildLogo(context),
               const SizedBox(height: 80),
               _buildEmailTextField(),
-              const SizedBox(height: 10),
+              const SizedBox(height: 20),
               _buildPasswordTextField(),
-              const SizedBox(height: 20),
+              const SizedBox(height: 40),
               _buildLoginButton(context),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               _buildRegisterButton(context),
             ],
           ),
@@ -46,8 +46,8 @@ class Login extends StatelessWidget {
         child: Center(
           child: Image.asset(
             'assets/logo.png',
-            width: 200,
-            height: 200,
+            width: 150,
+            height: 150,
           ),
         ),
       ),
@@ -56,7 +56,8 @@ class Login extends StatelessWidget {
 
   SizedBox _buildEmailTextField() {
     return SizedBox(
-      width: 300, // Ancho fijo para el TextField
+      width: 250,
+      height: 40,
       child: TextField(
         controller: emailController,
         decoration: InputDecoration(
@@ -77,7 +78,8 @@ class Login extends StatelessWidget {
 
   SizedBox _buildPasswordTextField() {
     return SizedBox(
-      width: 300, // Ancho fijo para el TextField
+      width: 250,
+      height: 40,
       child: TextField(
         controller: passwordController,
         decoration: InputDecoration(

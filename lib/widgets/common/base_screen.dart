@@ -20,7 +20,7 @@ class BaseScreen extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Container(
-              color: Colors.grey[300],
+              color: AppColors.colorPrimary,
               child: Center(
                 child: AdColumn(),
               ),
@@ -51,7 +51,7 @@ class BaseScreen extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Container(
-              color: Colors.grey[300],
+              color: AppColors.colorPrimary,
               child: Center(
                 child: AdColumn(),
               ),
