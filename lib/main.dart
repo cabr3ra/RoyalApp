@@ -1,13 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'package:royal_app/constants/firebase_options.dart';
-import 'package:royal_app/firebase/auth_service.dart';
+import 'package:royal_app/service/user_service.dart';
+import 'package:royal_app/service/game_service.dart';
 import 'package:royal_app/firebase/firestore_service.dart';
+import 'package:royal_app/firebase/storage_service.dart';
 import 'package:royal_app/routing/app_routes.dart';
 import 'package:royal_app/routing/routes.dart';
-import 'package:royal_app/service/game_service.dart';
-import 'package:royal_app/service/user_profile_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,32 +23,49 @@ class RoyalApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<AuthService>(create: (_) => AuthService()),
-        Provider<FirestoreService>(create: (_) => FirestoreService()),
+        // Proveedor para FirestoreService
+        Provider<FirestoreService>(
+          create: (_) => FirestoreService(),
+        ),
 
-        // Proveedor para UserProfileService
-        ChangeNotifierProxyProvider2<FirestoreService, AuthService, UserProfileService>(
-          create: (_) => UserProfileService(
-            Provider.of<FirestoreService>(_, listen: false),
-            Provider.of<AuthService>(_, listen: false),
-          ),
-          update: (_, firestoreService, authService, userProfileService) =>
-              UserProfileService(firestoreService, authService),
+        // Proveedor para StorageService
+        Provider<StorageService>(
+          create: (_) => StorageService(),
+        ),
+
+        // Proveedor para FirebaseFirestore
+        Provider<FirebaseFirestore>(
+          create: (_) => FirebaseFirestore.instance,
+        ),
+
+        // Proveedor para UserService
+        ChangeNotifierProxyProvider<FirebaseFirestore, UserService>(
+          create: (context) => UserService(),
+          update: (context, firestore, userService) {
+            userService!.updateFirestore(firestore);
+            return userService;
+          },
         ),
 
         // Proveedor para GameService
-        ChangeNotifierProxyProvider<UserProfileService, GameService>(
+        ChangeNotifierProxyProvider<UserService, GameService>(
           create: (context) => GameService(
-            Provider.of<UserProfileService>(context, listen: false),
+            Provider.of<UserService>(context, listen: false),
           ),
-          update: (context, userProfileService, gameService) =>
-              GameService(userProfileService),
+          update: (context, userService, gameService) {
+            gameService!.updateUserService(userService);
+            return gameService;
+          },
         ),
       ],
       child: MaterialApp(
         title: 'Royal App',
         routes: appRoutes,
         initialRoute: Routes.login,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
       ),
     );
   }

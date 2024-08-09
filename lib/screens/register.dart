@@ -1,38 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:royal_app/constants/colors.dart';
-import 'package:royal_app/firebase/auth_service.dart';
+import 'package:royal_app/service/user_service.dart';
 import 'package:royal_app/routing/routes.dart';
 import 'package:royal_app/widgets/common/custom_buttons.dart';
+import 'package:royal_app/widgets/common/base_screen.dart';
 
 class Register extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final AuthService _authService = AuthService();
+  final UserService _authService = UserService();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        color: AppColors.colorPrimary,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center, // Cambiado de stretch a center
-            children: [
-              _buildLogo(),
-              const SizedBox(height: 80),
-              _buildEmailTextField(),
-              const SizedBox(height: 20),
-              _buildPasswordTextField(),
-              const SizedBox(height: 40),
-              _buildRegisterButton(context),
-              const SizedBox(height: 10),
-              _buildLoginTextButton(context),
-            ],
-          ),
-        ),
-      ),
+    return BaseScreen(
+      bodyContent: [
+        const SizedBox(height: 60),
+        _buildLogo(),
+        const SizedBox(height: 80),
+        _buildEmailTextField(),
+        const SizedBox(height: 20),
+        _buildPasswordTextField(),
+        const SizedBox(height: 40),
+        _buildRegisterButton(context),
+        const SizedBox(height: 10),
+        _buildLoginTextButton(context),
+      ],
     );
   }
 

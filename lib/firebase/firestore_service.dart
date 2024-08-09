@@ -1,99 +1,9 @@
 import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:royal_app/models/player.dart';
-import 'package:royal_app/models/user_auth.dart';
-import 'package:royal_app/models/user_profile.dart';
 
 class FirestoreService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
-
-  // Crear documento de 'users' en Firestore
-  Future<void> createUserDocument(UserAuth user) async {
-    await _db.collection('users').doc(user.id).set({
-      'email': user.email,
-      'createdAt': FieldValue.serverTimestamp(),
-    });
-  }
-
-  // Crear documento de 'userProfiles' en Firestore
-  Future<void> createUserProfile(UserProfile userProfile) async {
-    await _db
-        .collection('usersProfiles')
-        .doc(userProfile.id)
-        .set(userProfile.toFirestore());
-  }
-
-  // Obtener datos del 'users' por su ID
-  Future<UserAuth> getUserData(String userId) async {
-    try {
-      DocumentSnapshot userDoc =
-          await _db.collection('users').doc(userId).get();
-      if (userDoc.exists) {
-        return UserAuth(
-          id: userId,
-          email: userDoc['email'] ?? '',
-        );
-      } else {
-        throw 'Usuario no encontrado con ID: $userId';
-      }
-    } catch (e) {
-      print('Error obteniendo datos del usuario: $e');
-      throw e;
-    }
-  }
-
-  // Obtener datos del 'userProfiles' por su ID
-  Future<UserProfile?> getUserProfile(String uid) async {
-    try {
-      DocumentSnapshot doc =
-          await _db.collection('usersProfiles').doc(uid).get();
-      if (doc.exists) {
-        return UserProfile.fromFirestore(doc);
-      } else {
-        throw 'Perfil de usuario no encontrado con ID: $uid';
-      }
-    } catch (e) {
-      print('Error obteniendo perfil del usuario: $e');
-      throw e;
-    }
-  }
-
-  // Actualizar 'userProfiles' en Firestore
-  Future<void> updateUserProfile(UserProfile userProfile) async {
-    await _db
-        .collection('usersProfiles')
-        .doc(userProfile.id)
-        .update(userProfile.toFirestore());
-  }
-
-  // Eliminar documento de 'users' en Firestore
-  Future<void> deleteUserDocument(String userId) async {
-    try {
-      await _db.collection('users').doc(userId).delete();
-    } catch (e) {
-      print('Error deleting user document: $e');
-      throw e;
-    }
-  }
-
-  // Eliminar documento de 'userProfiles' en Firestore
-  Future<void> deleteUserProfile(String userId) async {
-    try {
-      await _db.collection('userProfiles').doc(userId).delete();
-    } catch (e) {
-      print('Error deleting user profile: $e');
-      throw e;
-    }
-  }
-
-  // Obtener todos los usuarios
-  Future<List<Map<String, dynamic>>> getAllUsers() async {
-    final QuerySnapshot snapshot = await _db.collection('users').get();
-    return snapshot.docs
-        .map((doc) => doc.data() as Map<String, dynamic>)
-        .toList();
-  }
 
   // Obtener todos los jugadores
   Future<List<Player>> getAllPlayers() async {
@@ -112,7 +22,7 @@ class FirestoreService {
       DocumentSnapshot randomPlayerDoc = snapshot.docs[randomIndex];
       return Player.fromFirestore(randomPlayerDoc);
     } catch (e) {
-      print('Error getting random player: $e');
+      print('Error obteniendo jugador aleatorio: $e');
       rethrow;
     }
   }
@@ -137,7 +47,7 @@ class FirestoreService {
 
       return filteredPlayers;
     } catch (e) {
-      print('Error searching players: $e');
+      print('Error buscando jugadores: $e');
       throw e;
     }
   }
@@ -170,8 +80,44 @@ class FirestoreService {
         return '';
       }
     } catch (e) {
-      print('Error getting position abbreviation: $e');
+      print('Error obteniendo abreviatura de posición: $e');
       return '';
     }
+  }
+
+  // Método para actualizar el estado del juego en Firestore
+  Future<void> updateGameStatus(
+      String userId, String game, bool completed) async {
+    await _db
+        .collection('users')
+        .doc(userId)
+        .collection('games')
+        .doc(game)
+        .set({
+      'completed': completed,
+      'lastUpdated': FieldValue.serverTimestamp(),
+    });
+  }
+
+  // Método para obtener el estado del juego
+  Future<Map<String, dynamic>> getGameStatus(String userId) async {
+    DocumentSnapshot<Map<String, dynamic>> searchPlayerDoc = await _db
+        .collection('users')
+        .doc(userId)
+        .collection('games')
+        .doc('searchPlayer')
+        .get();
+
+    DocumentSnapshot<Map<String, dynamic>> careerPlayerDoc = await _db
+        .collection('users')
+        .doc(userId)
+        .collection('games')
+        .doc('careerPlayer')
+        .get();
+
+    return {
+      'searchPlayer': searchPlayerDoc.data() ?? {},
+      'careerPlayer': careerPlayerDoc.data() ?? {},
+    };
   }
 }

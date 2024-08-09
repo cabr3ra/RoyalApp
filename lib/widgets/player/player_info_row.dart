@@ -68,7 +68,7 @@ class _PlayerInfoRowState extends State<PlayerInfoRow> {
   // Obtiene los datos de la carrera del jugador desde el servicio de Firestore.
   Future<Map<String, dynamic>> _fetchPlayerCareer() async {
     final careerData =
-    await widget.firestoreService.getPlayerCareer(widget.player.id);
+        await widget.firestoreService.getPlayerCareer(widget.player.id);
     return {'career': careerData};
   }
 
@@ -108,12 +108,30 @@ class _PlayerInfoRowState extends State<PlayerInfoRow> {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 8),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        // Centra la fila horizontalmente
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          _buildPlayerAvatar(),
-          SizedBox(width: 10),
-          Expanded(child: _buildPlayerDetails()),
+          Expanded(
+            flex: 1,
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: _buildPlayerName(),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Center(
+              child: _buildPlayerAvatar(),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: _buildPlayerSurname(),
+            ),
+          ),
         ],
       ),
     );
@@ -145,45 +163,48 @@ class _PlayerInfoRowState extends State<PlayerInfoRow> {
         borderRadius: BorderRadius.circular(35),
         child: imageUrl.isNotEmpty
             ? Image.network(
-          imageUrl,
-          width: 70,
-          height: 70,
-          fit: BoxFit.cover,
-        )
+                imageUrl,
+                width: 70,
+                height: 70,
+                fit: BoxFit.cover,
+              )
             : Icon(Icons.person, size: 70, color: Colors.grey),
       ),
     );
   }
 
-  // Construye el widget con los detalles del jugador con animación.
-  Widget _buildPlayerDetails() {
+  // Construye el widget del nombre del jugador con animación.
+  Widget _buildPlayerName() {
     return AnimationInfo(
-      delay: 800,
+      delay: 200,
       animationType: AnimationType.translateX,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            '${widget.player.name}',
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.white.withOpacity(0.8),
-            ),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-          SizedBox(height: 4),
-          Text(
-            '${widget.player.surname}',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ],
+      child: Text(
+        '${widget.player.name}',
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+          color: Colors.white.withOpacity(0.8),
+        ),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+      ),
+    );
+  }
+
+  // Construye el widget del apellido del jugador con animación.
+  Widget _buildPlayerSurname() {
+    return AnimationInfo(
+      delay: 200,
+      animationType: AnimationType.translateXReverse,
+      child: Text(
+        '${widget.player.surname}',
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
       ),
     );
   }
@@ -212,8 +233,8 @@ class _PlayerInfoRowState extends State<PlayerInfoRow> {
 
   // Muestra un diálogo de fracaso cuando se alcanza el número máximo de intentos.
   void _showFailureDialog(BuildContext context) async {
-    String imageUrl = await widget.storageService
-        .getPlayerImageUrl(widget.randomPlayer!.name, widget.randomPlayer!.surname);
+    String imageUrl = await widget.storageService.getPlayerImageUrl(
+        widget.randomPlayer!.name, widget.randomPlayer!.surname);
 
     Duration elapsedTime = DateTime.now().difference(widget.startTime);
     int attempts = widget.attempts;

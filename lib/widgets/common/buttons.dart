@@ -27,12 +27,12 @@ class Buttons extends StatelessWidget {
           onPressed: isAvailable ? onPressed : null,
           style: ElevatedButton.styleFrom(
             padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-            backgroundColor: isCompleted ? AppColors.colorExtra : Colors.white,
+            backgroundColor: isCompleted ? AppColors.colorCrown : Colors.white,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
             ),
             side: BorderSide(
-              color: isCompleted ? AppColors.colorExtra : AppColors.colorSecondary,
+              color: isCompleted ? AppColors.colorCrown : AppColors.colorSecondary,
               width: 2,
             ),
           ),

@@ -51,9 +51,12 @@ class _PlayerItemState extends State<PlayerItem> {
 
   // Obtiene la información del jugador desde los servicios de almacenamiento y Firestore
   Future<Map<String, String>> _fetchPlayerInfo() async {
-    final teamImageUrl = await widget.storageService.getTeamImageUrl(widget.player.actualTeamId);
-    final nationalityImageUrl = await widget.storageService.getNationalityImageUrl(widget.player.nationalityId);
-    final positionAbb = await widget.firestoreService.getPositionAbb(widget.player.positionId);
+    final teamImageUrl =
+        await widget.storageService.getTeamImageUrl(widget.player.actualTeamId);
+    final nationalityImageUrl = await widget.storageService
+        .getNationalityImageUrl(widget.player.nationalityId);
+    final positionAbb =
+        await widget.firestoreService.getPositionAbb(widget.player.positionId);
 
     return {
       'teamImageUrl': teamImageUrl,
@@ -101,9 +104,12 @@ class _PlayerItemState extends State<PlayerItem> {
       future: _playerInfoFuture,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}', style: TextStyle(color: Colors.red)));
+          return Center(
+              child: Text('Error: ${snapshot.error}',
+                  style: TextStyle(color: Colors.red)));
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Center(child: Text('', style: TextStyle(color: Colors.white)));
+          return const Center(
+              child: Text('', style: TextStyle(color: Colors.white)));
         } else {
           final playerInfo = snapshot.data!;
           return SingleChildScrollView(
@@ -132,7 +138,8 @@ class _PlayerItemState extends State<PlayerItem> {
                 ),
                 _buildFlexibleInfo(
                   'Edad',
-                  AgeCalculator.calculateAge(widget.player.dateOfBirth).toString(),
+                  AgeCalculator.calculateAge(widget.player.dateOfBirth)
+                      .toString(),
                   infoDelay: infoDelay * 8,
                   textSize: 14,
                 ),
@@ -152,7 +159,10 @@ class _PlayerItemState extends State<PlayerItem> {
 
   // Construye un widget flexible con información sobre el jugador
   Widget _buildFlexibleInfo(String label, String? value,
-      {required int infoDelay, bool isImage = false, double imageSize = 50, double textSize = 14}) {
+      {required int infoDelay,
+      bool isImage = false,
+      double imageSize = 50,
+      double textSize = 14}) {
     return Padding(
       padding: const EdgeInsets.only(right: 12.0),
       child: Flexible(
@@ -181,8 +191,7 @@ class _PlayerItemState extends State<PlayerItem> {
         Future.delayed(Duration(milliseconds: 2500), () {
           _showSuccessDialog(context);
         });
-      }
-      else if (_shouldShowFailureDialog()) {
+      } else if (_shouldShowFailureDialog()) {
         Future.delayed(Duration(milliseconds: 2500), () {
           _showFailureDialog(context);
         });
@@ -193,8 +202,8 @@ class _PlayerItemState extends State<PlayerItem> {
 
   // Muestra un diálogo de éxito
   void _showSuccessDialog(BuildContext context) async {
-    String imageUrl = await widget.storageService.getPlayerImageUrl(
-        widget.player.name, widget.player.surname);
+    String imageUrl = await widget.storageService
+        .getPlayerImageUrl(widget.player.name, widget.player.surname);
 
     Duration elapsedTime = DateTime.now().difference(widget.startTime);
     int attempts = widget.attempts;
@@ -241,7 +250,8 @@ class _PlayerItemState extends State<PlayerItem> {
         ? _getPlayerAttribute(widget.randomPlayer!, label)
         : null;
 
-    bool valuesMatch = randomPlayerValue != null && playerValue == randomPlayerValue;
+    bool valuesMatch =
+        randomPlayerValue != null && playerValue == randomPlayerValue;
 
     bool playerValueIsHigher = false;
     bool playerValueIsLower = false;
@@ -257,7 +267,8 @@ class _PlayerItemState extends State<PlayerItem> {
       }
     }
 
-    bool isDorsalOrAge = label.toLowerCase() == 'dorsal' || label.toLowerCase() == 'edad';
+    bool isDorsalOrAge =
+        label.toLowerCase() == 'dorsal' || label.toLowerCase() == 'edad';
 
     return Container(
       width: imageSize,
@@ -269,36 +280,36 @@ class _PlayerItemState extends State<PlayerItem> {
       padding: EdgeInsets.all(5.5),
       child: isImage
           ? ClipRRect(
-        borderRadius: BorderRadius.circular(30),
-        child: value != null && value.isNotEmpty
-            ? Image.network(
-          value,
-          width: imageSize,
-          height: imageSize,
-          fit: BoxFit.cover,
-        )
-            : Icon(Icons.person, size: imageSize, color: Colors.white),
-      )
+              borderRadius: BorderRadius.circular(30),
+              child: value != null && value.isNotEmpty
+                  ? Image.network(
+                      value,
+                      width: imageSize,
+                      height: imageSize,
+                      fit: BoxFit.cover,
+                    )
+                  : Icon(Icons.person, size: imageSize, color: Colors.white),
+            )
           : Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              value ?? '',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: textSize,
-                color: Colors.white,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    value ?? '',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: textSize,
+                      color: Colors.white,
+                    ),
+                  ),
+                  if (isDorsalOrAge && playerValueIsHigher)
+                    Icon(Icons.arrow_downward, color: Colors.white, size: 12),
+                  if (isDorsalOrAge && playerValueIsLower)
+                    Icon(Icons.arrow_upward, color: Colors.white, size: 12),
+                ],
               ),
             ),
-            if (isDorsalOrAge && playerValueIsHigher)
-              Icon(Icons.arrow_downward, color: Colors.white, size: 12),
-            if (isDorsalOrAge && playerValueIsLower)
-              Icon(Icons.arrow_upward, color: Colors.white, size: 12),
-          ],
-        ),
-      ),
     );
   }
 
@@ -328,7 +339,6 @@ class _PlayerItemState extends State<PlayerItem> {
 
   // Determina si se debe mostrar el diálogo de fracaso
   bool _shouldShowFailureDialog() {
-    return widget.randomPlayer != null &&
-        widget.attempts >= 5;
+    return widget.randomPlayer != null && widget.attempts >= 5;
   }
 }

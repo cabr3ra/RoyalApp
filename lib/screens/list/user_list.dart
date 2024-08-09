@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:royal_app/firebase/firestore_service.dart';
+import 'package:royal_app/service/user_service.dart';
+import 'package:royal_app/models/user_data.dart';
 
 class UserList extends StatelessWidget {
-  final FirestoreService _firestoreService = FirestoreService();
+  final UserService _userService = UserService();
 
   @override
   Widget build(BuildContext context) {
@@ -10,8 +11,8 @@ class UserList extends StatelessWidget {
       appBar: AppBar(
         title: Text('Usuarios Registrados'),
       ),
-      body: FutureBuilder<List<Map<String, dynamic>>>(
-        future: _firestoreService.getAllUsers(),
+      body: FutureBuilder<List<UserData>>(
+        future: _userService.getAllUsers(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
@@ -26,9 +27,9 @@ class UserList extends StatelessWidget {
               itemBuilder: (context, index) {
                 final user = users[index];
                 return ListTile(
-                  title: Text(user['email'] ?? 'Sin correo'),
+                  title: Text(user.email ?? 'Sin correo'),
                   subtitle: Text(
-                      'Registrado el: ${user['createdAt']?.toDate().toString() ?? 'N/A'}'),
+                      'Username: ${user.username ?? 'N/A'}, Puntos: ${user.points ?? 'N/A'}'),
                 );
               },
             );

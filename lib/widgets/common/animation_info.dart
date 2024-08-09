@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 enum AnimationType {
   translateY,
   translateX,
+  translateXReverse,
   fadeIn,
   scale,
   rotate,
@@ -35,6 +36,8 @@ class AnimationInfo extends StatelessWidget {
               return _buildTranslateYAnimation();
             case AnimationType.translateX:
               return _buildTranslateXAnimation();
+            case AnimationType.translateXReverse:
+              return _buildTranslateXReverseAnimation();
             case AnimationType.fadeIn:
               return _buildFadeInAnimation();
             case AnimationType.scale:
@@ -72,6 +75,24 @@ class AnimationInfo extends StatelessWidget {
     return TweenAnimationBuilder<double>(
       duration: Duration(milliseconds: 500),
       tween: Tween(begin: -1.0, end: 0.0),
+      builder: (context, translateX, child) {
+        return Opacity(
+          opacity: 1.0,
+          child: Transform.translate(
+            offset: Offset(translateX * 15, 0.0),
+            child: child,
+          ),
+        );
+      },
+      child: child,
+    );
+  }
+
+  // TranslateXReverse
+  Widget _buildTranslateXReverseAnimation() {
+    return TweenAnimationBuilder<double>(
+      duration: Duration(milliseconds: 500),
+      tween: Tween(begin: 0.0, end: -1.0),
       builder: (context, translateX, child) {
         return Opacity(
           opacity: 1.0,

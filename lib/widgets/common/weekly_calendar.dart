@@ -56,7 +56,7 @@ class WeeklyCalendar extends StatelessWidget {
       width: 30,
       height: 30,
       decoration: BoxDecoration(
-        color: completed ? AppColors.colorExtra : (isToday ? Colors.blue : Colors.grey),
+        color: completed ? AppColors.colorCrown : (isToday ? Colors.blue : Colors.grey),
         shape: BoxShape.circle,
       ),
       child: Center(
