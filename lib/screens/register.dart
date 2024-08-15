@@ -24,6 +24,7 @@ class Register extends StatelessWidget {
         const SizedBox(height: 10),
         _buildLoginTextButton(context),
       ],
+      showAppBar: false,
     );
   }
 

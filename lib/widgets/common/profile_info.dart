@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:royal_app/constants/colors.dart';
 
 class ProfileInfo extends StatelessWidget {
   final String title;

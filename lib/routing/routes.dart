@@ -10,4 +10,5 @@ class Routes {
   static const settings = '/settings';
   static const userList = '/userList';
   static const playerList = '/playerList';
+  static const privacyPolicy = '/privacyPolicy';
 }

@@ -39,11 +39,9 @@ class _SearchPlayerState extends State<SearchPlayer> {
   void _fetchRandomPlayer() async {
     try {
       Player? newRandomPlayer = await _firestoreService.getRandomPlayer();
-      if (_randomPlayer == null || _randomPlayer != newRandomPlayer) {
-        setState(() {
-          _randomPlayer = newRandomPlayer;
-        });
-      }
+      setState(() {
+        _randomPlayer = newRandomPlayer;
+      });
     } catch (e) {
       print('Error fetching random player: $e');
     }
@@ -134,10 +132,13 @@ class _SearchPlayerState extends State<SearchPlayer> {
             bottom: Radius.circular(10),
           ),
         ),
-        child: _searchResults.isNotEmpty ? _buildSearchResults() : null,
+        child: _searchResults.isNotEmpty
+            ? _buildSearchResults()
+            : SizedBox(height: 50),
       ),
     );
   }
+
 
   // Construye la lista de resultados de búsqueda
   Widget _buildSearchResults() {

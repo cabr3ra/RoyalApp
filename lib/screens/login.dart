@@ -24,6 +24,7 @@ class Login extends StatelessWidget {
         const SizedBox(height: 10),
         _buildRegisterButton(context),
       ],
+      showAppBar: false,
     );
   }
 

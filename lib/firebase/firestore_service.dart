@@ -27,6 +27,20 @@ class FirestoreService {
     }
   }
 
+  // Obtener un jugador aleatorio diario
+  Future<Player> getDailyRandomPlayer() async {
+    final dailyPlayerDoc = await _db.collection('players').doc('today').get();
+    if (dailyPlayerDoc.exists) {
+      return Player.fromFirestore(dailyPlayerDoc);
+    } else {
+      // Generate a new daily random player and store it in the collection
+      final playersSnapshot = await _db.collection('players').get();
+      final randomPlayer = playersSnapshot.docs[Random().nextInt(playersSnapshot.docs.length)];
+      await _db.collection('players').doc('today').set(randomPlayer.data());
+      return Player.fromFirestore(randomPlayer);
+    }
+  }
+
   // Buscar jugadores por nombre o apellido
   Future<List<Player>> searchPlayers(String query) async {
     try {
@@ -75,7 +89,7 @@ class FirestoreService {
       DocumentSnapshot positionDoc =
           await _db.collection('positions').doc(positionId).get();
       if (positionDoc.exists) {
-        return positionDoc['abbreviation'];
+        return positionDoc['abbreviation'] ?? '';
       } else {
         return '';
       }

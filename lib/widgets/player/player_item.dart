@@ -51,18 +51,28 @@ class _PlayerItemState extends State<PlayerItem> {
 
   // Obtiene la información del jugador desde los servicios de almacenamiento y Firestore
   Future<Map<String, String>> _fetchPlayerInfo() async {
-    final teamImageUrl =
-        await widget.storageService.getTeamImageUrl(widget.player.actualTeamId);
-    final nationalityImageUrl = await widget.storageService
-        .getNationalityImageUrl(widget.player.nationalityId);
-    final positionAbb =
-        await widget.firestoreService.getPositionAbb(widget.player.positionId);
+    try {
+      final teamImageUrl = await widget.storageService
+          .getTeamImageUrl(widget.player.actualTeamId);
+      final nationalityImageUrl = await widget.storageService
+          .getNationalityImageUrl(widget.player.nationalityId);
+      final positionAbb = await widget.firestoreService
+          .getPositionAbb(widget.player.positionId);
 
-    return {
-      'teamImageUrl': teamImageUrl,
-      'nationalityImageUrl': nationalityImageUrl,
-      'positionAbb': positionAbb,
-    };
+      return {
+        'teamImageUrl': teamImageUrl ?? '',
+        'nationalityImageUrl': nationalityImageUrl ?? '',
+        'positionAbb': positionAbb ?? '',
+      };
+    } catch (e, stacktrace) {
+      print('Error fetching player info: $e');
+      print('Stacktrace: $stacktrace');
+      return {
+        'teamImageUrl': '',
+        'nationalityImageUrl': '',
+        'positionAbb': '',
+      };
+    }
   }
 
   @override
@@ -103,15 +113,24 @@ class _PlayerItemState extends State<PlayerItem> {
     return FutureBuilder<Map<String, String>>(
       future: _playerInfoFuture,
       builder: (context, snapshot) {
-        if (snapshot.hasError) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Text('');
+        } else if (snapshot.hasError) {
           return Center(
-              child: Text('Error: ${snapshot.error}',
-                  style: TextStyle(color: Colors.red)));
+            child: Text('Error: ${snapshot.error}',
+                style: TextStyle(color: Colors.red)),
+          );
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
           return const Center(
-              child: Text('', style: TextStyle(color: Colors.white)));
+            child: Text('No data available',
+                style: TextStyle(color: Colors.white)),
+          );
         } else {
           final playerInfo = snapshot.data!;
+
+          // Imprimir la información del jugador
+          // print('Player Info: $playerInfo');
+
           return SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
@@ -157,7 +176,7 @@ class _PlayerItemState extends State<PlayerItem> {
     );
   }
 
-  // Construye un widget flexible con información sobre el jugador
+  // Construye un widget con información sobre el jugador
   Widget _buildFlexibleInfo(String label, String? value,
       {required int infoDelay,
       bool isImage = false,
@@ -165,21 +184,25 @@ class _PlayerItemState extends State<PlayerItem> {
       double textSize = 14}) {
     return Padding(
       padding: const EdgeInsets.only(right: 12.0),
-      child: Flexible(
-        child: AnimationInfo(
-          delay: infoDelay,
-          child: FittedBox(
-            fit: BoxFit.scaleDown,
-            child: _buildInfo(
-              label,
-              value,
-              isImage: isImage,
-              imageSize: imageSize,
-              textSize: textSize,
+      child: Row(
+        children: [
+          Flexible(
+            child: AnimationInfo(
+              delay: infoDelay,
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: _buildInfo(
+                  label,
+                  value,
+                  isImage: isImage,
+                  imageSize: imageSize,
+                  textSize: textSize,
+                ),
+              ),
+              animationType: AnimationType.translateY,
             ),
           ),
-          animationType: AnimationType.translateY,
-        ),
+        ],
       ),
     );
   }
@@ -325,7 +348,7 @@ class _PlayerItemState extends State<PlayerItem> {
       case 'Edad':
         return AgeCalculator.calculateAge(player.dateOfBirth).toString();
       case 'Dorsal':
-        return player.dorsal.toString();
+        return player.dorsal.toString() ?? '';
       default:
         return '';
     }

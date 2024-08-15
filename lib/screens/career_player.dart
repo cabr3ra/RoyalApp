@@ -39,11 +39,9 @@ class _CareerPlayerState extends State<CareerPlayer> {
   void _fetchRandomPlayer() async {
     try {
       Player? newRandomPlayer = await _firestoreService.getRandomPlayer();
-      if (_randomPlayer == null || _randomPlayer != newRandomPlayer) {
-        setState(() {
-          _randomPlayer = newRandomPlayer;
-        });
-      }
+      setState(() {
+        _randomPlayer = newRandomPlayer;
+      });
     } catch (e) {
       print('Error fetching random player: $e');
     }

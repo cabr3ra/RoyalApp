@@ -10,6 +10,22 @@ class Settings extends StatelessWidget {
     return BaseScreen(
       appBarTitle: 'Ajustes',
       bodyContent: [
+        SizedBox(height: 100),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.pushNamed(context, Routes.privacyPolicy);
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.black,
+          ),
+          child: Text(
+            'Política de privacidad',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+            ),
+          ),
+        ),
         SizedBox(height: 50),
         ElevatedButton(
           onPressed: () => _handleSignOut(context),
