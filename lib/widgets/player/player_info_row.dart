@@ -153,8 +153,8 @@ class _PlayerInfoRowState extends State<PlayerInfoRow> {
   // Construye el widget de la imagen del jugador, mostrando un marcador de posición si la URL está vacía.
   Widget _buildPlayerImage(String imageUrl) {
     return Container(
-      width: 70,
-      height: 70,
+      width: 60,
+      height: 60,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: Colors.white,
@@ -164,11 +164,11 @@ class _PlayerInfoRowState extends State<PlayerInfoRow> {
         child: imageUrl.isNotEmpty
             ? Image.network(
                 imageUrl,
-                width: 70,
-                height: 70,
+                width: 60,
+                height: 60,
                 fit: BoxFit.cover,
               )
-            : Icon(Icons.person, size: 70, color: Colors.grey),
+            : Icon(Icons.person, size: 60, color: Colors.grey),
       ),
     );
   }

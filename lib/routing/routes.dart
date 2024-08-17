@@ -3,7 +3,6 @@ class Routes {
 
   static const home = '/home';
   static const login = '/login';
-  static const profile = '/profile';
   static const register = '/register';
   static const searchPlayer = '/searchPlayer';
   static const careerPlayer = '/careerPlayer';

@@ -17,6 +17,7 @@ dependencies:
   shared_preferences: ^2.0.11
   video_player: ^2.3.0
   wakelock: ^0.6.2
+  url_launcher: 6.3.0
 
 dev_dependencies:
   flutter_test:
@@ -40,4 +41,5 @@ flutter:
     - assets/widgets/ranking.png
     - assets/widgets/search_player.png
     - assets/widgets/settings.png
+    - assets/widgets/question.png
     - assets/logo.png

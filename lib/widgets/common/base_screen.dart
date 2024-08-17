@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:royal_app/constants/colors.dart';
-import 'package:royal_app/widgets/common/ad_column.dart';
+import 'package:royal_app/screens/ad_column_left.dart';
+import 'package:royal_app/screens/ad_column_right.dart';
 import 'package:royal_app/routing/routes.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class BaseScreen extends StatelessWidget {
   final String appBarTitle;
   final List<Widget> bodyContent;
   final bool showAppBar;
+  final bool showAdColumnLeft;
+  final bool showAdColumnRight;
 
   BaseScreen({
     this.appBarTitle = '',
     required this.bodyContent,
     this.showAppBar = true,
+    this.showAdColumnLeft = true,
+    this.showAdColumnRight = true,
   });
 
   @override
@@ -35,28 +41,27 @@ class BaseScreen extends StatelessWidget {
               ),
               child: Row(
                 children: [
+                  if (showAdColumnLeft)
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        color: Colors.transparent,
+                        child: Center(
+                          child: AdColumnLeft(),
+                        ),
+                      ),
+                    ),
                   Expanded(
                     flex: 1,
                     child: Container(
                       color: Colors.transparent,
-                      // Transparent to show the gradient
-                      child: Center(
-                        child: AdColumn(),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Container(
-                      color: Colors.transparent,
-                      // Transparent to show the gradient
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           if (showAppBar) _buildAppBar(context),
                           Flexible(
-                            flex: 2, // Adjust flex value as needed
+                            flex: 2,
                             child: Padding(
                               padding: const EdgeInsets.all(10),
                               child: Column(
@@ -69,21 +74,21 @@ class BaseScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      color: Colors.transparent,
-                      // Transparent to show the gradient
-                      child: Center(
-                        child: AdColumn(),
+                  if (showAdColumnRight)
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        color: Colors.transparent,
+                        child: Center(
+                          child: AdColumnRight(),
+                        ),
                       ),
                     ),
-                  ),
                 ],
               ),
             ),
           ),
-          _buildFooter(),
+          _buildFooter(context),
         ],
       ),
     );
@@ -122,32 +127,10 @@ class BaseScreen extends StatelessWidget {
           },
         ),
       ),
-      actions: [
-        IconButton(
-          icon: SizedBox(
-            width: 30,
-            height: 30,
-            child: Image.asset('assets/widgets/settings.png'),
-          ),
-          onPressed: () {
-            Navigator.pushNamed(context, Routes.settings);
-          },
-        ),
-      ],
-      leading: IconButton(
-        icon: SizedBox(
-          width: 30,
-          height: 30,
-          child: Image.asset('assets/widgets/profile.png'),
-        ),
-        onPressed: () {
-          Navigator.pushNamed(context, Routes.profile);
-        },
-      ),
     );
   }
 
-  Widget _buildFooter() {
+  Widget _buildFooter(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -157,12 +140,63 @@ class BaseScreen extends StatelessWidget {
         ),
       ),
       padding: const EdgeInsets.all(16.0),
-      child: Center(
-        child: Text(
-          '© 2024 Royal App || Todos los logotipos y marcas son propiedad de sus respectivos propietarios y se utilizan solo para fines de identificación.',
-          style: TextStyle(color: Colors.white, fontSize: 10),
-          textAlign: TextAlign.center,
-        ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Center(
+            child: Text(
+              '© 2024 Royal App || Todos los logotipos y marcas son propiedad de sus respectivos propietarios y se utilizan solo para fines de identificación.',
+              style: TextStyle(color: Colors.white, fontSize: 10),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          const SizedBox(height: 8.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, Routes.privacyPolicy);
+                },
+                child: Text(
+                  'Políticas de privacidad',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 10,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 16.0),
+              GestureDetector(
+                onTap: () async {
+                  final Uri emailUri = Uri(
+                    scheme: 'mailto',
+                    path: 'uri.tucody@gmail.com',
+                  );
+
+                  try {
+                    if (await canLaunchUrl(emailUri)) {
+                      await launchUrl(emailUri);
+                    } else {
+                      print('No se puede abrir la aplicación de correo.');
+                    }
+                  } catch (e) {
+                    print('Error lanzando el correo: $e');
+                  }
+                },
+                child: Text(
+                  'Contacto',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 10,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

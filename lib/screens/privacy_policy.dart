@@ -5,13 +5,13 @@ class PrivacyPolicy extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
-      appBarTitle: 'Política de Privacidad',
       bodyContent: [
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: 20),
               _sectionTitle(context, 'Política de Privacidad de Royal App'),
               _sectionText(context,
                   'Esta política detalla cómo recopilamos, utilizamos y protegemos tu información personal cuando usas nuestra aplicación Royal App, diseñada para los fanáticos de la Kings League.'),
@@ -53,6 +53,9 @@ class PrivacyPolicy extends StatelessWidget {
           ),
         ),
       ],
+      showAppBar: false,
+      showAdColumnLeft: false,
+      showAdColumnRight: false,
     );
   }
 

@@ -136,7 +136,7 @@ class _RandomInfoRowState extends State<RandomInfoRow> {
             season,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 12,
+              fontSize: 10,
             ),
           ),
           SizedBox(height: 4),
@@ -145,7 +145,7 @@ class _RandomInfoRowState extends State<RandomInfoRow> {
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
-              fontSize: 16,
+              fontSize: 12,
             ),
           ),
         ],

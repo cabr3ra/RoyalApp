@@ -56,15 +56,38 @@ class WeeklyCalendar extends StatelessWidget {
       width: 30,
       height: 30,
       decoration: BoxDecoration(
-        color: completed ? AppColors.colorCrown : (isToday ? Colors.blue : Colors.grey),
+        gradient: _getDayCircleGradient(completed, isToday),
         shape: BoxShape.circle,
       ),
       child: Center(
         child: Text(
           dayDate.day.toString(),
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
+          style: TextStyle(
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
         ),
       ),
     );
+  }
+
+  LinearGradient _getDayCircleGradient(bool completed, bool isToday) {
+    if (completed) {
+      return LinearGradient(
+        colors: [AppColors.colorCrown, Colors.black12],
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+      );
+    } else if (isToday) {
+      return LinearGradient(
+        colors: [Colors.white, AppColors.colorSecondary],
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+      );
+    } else {
+      return LinearGradient(
+        colors: [Colors.grey, AppColors.colorSecondary],
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+      );
+    }
   }
 }

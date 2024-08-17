@@ -25,6 +25,8 @@ class Register extends StatelessWidget {
         _buildLoginTextButton(context),
       ],
       showAppBar: false,
+      showAdColumnLeft: false,
+      showAdColumnRight: false,
     );
   }
 

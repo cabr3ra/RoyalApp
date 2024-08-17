@@ -97,7 +97,7 @@ class _PlayerItemState extends State<PlayerItem> {
       child: Text(
         '${widget.player.name} ${widget.player.surname}',
         style: TextStyle(
-          fontSize: 20,
+          fontSize: 16,
           fontWeight: FontWeight.bold,
           color: Colors.white,
         ),

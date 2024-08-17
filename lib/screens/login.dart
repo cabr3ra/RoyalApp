@@ -25,15 +25,20 @@ class Login extends StatelessWidget {
         _buildRegisterButton(context),
       ],
       showAppBar: false,
+      showAdColumnLeft: false,
+      showAdColumnRight: false,
     );
   }
 
   Center _buildLogo() {
     return Center(
-      child: Image.asset(
-        'assets/logo.png',
-        width: 150,
-        height: 150,
+      child: Hero(
+        tag: 'logoImage',
+        child: Image.asset(
+          'assets/logo.png',
+          width: 150,
+          height: 150,
+        ),
       ),
     );
   }
@@ -93,7 +98,7 @@ class Login extends StatelessWidget {
           passwordController.text,
         );
         if (errorMessage == null) {
-          Navigator.pushReplacementNamed(context, Routes.home);
+          Navigator.pushNamed(context, Routes.home);
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(errorMessage)),

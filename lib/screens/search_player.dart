@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:royal_app/constants/colors.dart';
 import 'package:royal_app/firebase/firestore_service.dart';
 import 'package:royal_app/firebase/storage_service.dart';
 import 'package:royal_app/models/player.dart';
@@ -92,9 +91,7 @@ class _SearchPlayerState extends State<SearchPlayer> {
           onChanged: _performSearch,
           onClear: _clearSearchResults,
         ),
-        const SizedBox(height: 10),
         _buildSearchResultsContainer(),
-        const SizedBox(height: 10),
         Center(
           child: AttemptsInfo(maxAttempts, _attemptedPlayers.length),
         ),
@@ -126,15 +123,16 @@ class _SearchPlayerState extends State<SearchPlayer> {
     return Expanded(
       flex: _searchResults.isNotEmpty ? 1 : 0,
       child: Container(
+        width: 450,
         decoration: BoxDecoration(
-          color: AppColors.colorSecondary,
+          color: Colors.transparent,
           borderRadius: BorderRadius.vertical(
             bottom: Radius.circular(10),
           ),
         ),
         child: _searchResults.isNotEmpty
             ? _buildSearchResults()
-            : SizedBox(height: 50),
+            : SizedBox(height: 40),
       ),
     );
   }
@@ -151,6 +149,7 @@ class _SearchPlayerState extends State<SearchPlayer> {
             '${player.name} ${player.surname}',
             style: TextStyle(
               color: Colors.white,
+              fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
           ),

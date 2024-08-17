@@ -9,36 +9,19 @@ import 'package:royal_app/widgets/common/base_screen.dart';
 class Home extends StatelessWidget {
   final double iconSize = 30;
   final double buttonFontSize = 16;
-  final double textFontSize = 16;
 
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
       appBarTitle: 'Home',
       bodyContent: [
-        const SizedBox(height: 10),
+        const SizedBox(height: 20),
         WeeklyCalendar(),
-        const SizedBox(height: 10),
-        _buildScore(context),
         const SizedBox(height: 50),
         _buildSearchPlayerButton(context),
         const SizedBox(height: 20),
         _buildCareerPlayerButton(context),
       ],
-    );
-  }
-
-  Widget _buildScore(BuildContext context) {
-    return Consumer<GameService>(
-      builder: (context, gameService, child) {
-        return Text(
-          'Puntos: ${gameService.playerPoints}',
-          style: TextStyle(
-              fontSize: textFontSize,
-              color: Colors.white,
-              fontWeight: FontWeight.bold),
-        );
-      },
     );
   }
 

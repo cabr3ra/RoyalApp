@@ -129,8 +129,9 @@ class _CareerPlayerState extends State<CareerPlayer> {
     return Expanded(
       flex: _searchResults.isNotEmpty ? 1 : 0,
       child: Container(
+        width: 450,
         decoration: BoxDecoration(
-          color: Color(0xFF015183),
+          color: Colors.transparent,
           borderRadius: BorderRadius.vertical(
             bottom: Radius.circular(10),
           ),
@@ -186,7 +187,6 @@ class _CareerPlayerState extends State<CareerPlayer> {
                 attempts: _attemptedPlayers.length,
                 gameService: Provider.of<GameService>(context, listen: false),
               ),
-              SizedBox(height: 15),
             ],
           );
         },

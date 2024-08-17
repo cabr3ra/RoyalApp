@@ -10,7 +10,7 @@ class AttemptsInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 105, vertical: 5),
+      width: 200,
       decoration: BoxDecoration(
         color: AppColors.colorPrimary,
         borderRadius: BorderRadius.circular(5),
@@ -23,8 +23,10 @@ class AttemptsInfo extends StatelessWidget {
           Flexible(
             child: Text(
               'Intentos restantes: ${maxAttempts - currentAttempts}',
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold),
               overflow: TextOverflow.ellipsis,
             ),
           ),
