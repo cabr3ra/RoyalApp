@@ -44,7 +44,7 @@ class _AdColumnRightState extends State<AdColumnRight> {
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
-                      '¡Hola! Soy 🍅, programador y seguidor de la Kings y Queens League.\n\n'
+                      '¡Hola! Soy 🍅, estudiante programador y seguidor de la Kings y Queens League.\n\n'
                       'Decidí crear esta web para que jugadores, presidentes, creadores de contenido disfruten tanto como yo disfruté haciéndola.\n\n'
                       '¡Espero que les guste! 😄',
                       style: TextStyle(

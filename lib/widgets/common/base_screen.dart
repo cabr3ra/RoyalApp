@@ -127,8 +127,23 @@ class BaseScreen extends StatelessWidget {
           },
         ),
       ),
+      actions: [
+        IconButton(
+          icon: SizedBox(
+            height: 30,
+            child: Image.asset(
+              'assets/widgets/perfil.png',
+              fit: BoxFit.contain,
+            ),
+          ),
+          onPressed: () {
+            Navigator.pushNamed(context, Routes.playerList);
+          },
+        ),
+      ],
     );
   }
+
 
   Widget _buildFooter(BuildContext context) {
     return Container(
