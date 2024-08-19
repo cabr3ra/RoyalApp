@@ -95,10 +95,16 @@ class Register extends StatelessWidget {
           passwordController.text,
         );
         if (errorMessage == null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+                content: Text(
+                    'Registro exitoso. Por favor, verifica tu correo electrónico antes de iniciar sesión.')),
+          );
           Navigator.pushReplacementNamed(context, Routes.login);
         } else {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text(errorMessage)));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(errorMessage)),
+          );
         }
       },
     );

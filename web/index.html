@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2984175706371103"
+            crossorigin="anonymous"></script>
+
     <base href="/">
     <meta charset="UTF-8">
     <meta content="IE=Edge" http-equiv="X-UA-Compatible">
@@ -22,34 +26,44 @@
     <script>
     const serviceWorkerVersion = '{{flutter_service_worker_version}}';
 
-
     </script>
 
     <!-- Load scripts in a specific order -->
     <script src="flutter.js" defer></script>
     <script src="flutter_bootstrap.js" defer></script>
 
+</head>
+<body>
+<!-- AdSense ad block -->
+<div align="center">
     <script async
             src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2984175706371103"
             crossorigin="anonymous"></script>
-</head>
-<body>
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:90px"
+         data-ad-client="ca-pub-2984175706371103"
+         data-ad-slot="1234567890"></ins>
+    <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+
+    </script>
+</div>
+
 <script src="flutter_bootstrap.js" async></script>
 <script>
-    window.addEventListener('load', function(ev) {
-      // Download main.dart.js
-      _flutter.loader.load({
-        config: {},
-        onEntrypointLoaded: function(engineInitializer) {
-            engineInitializer.initializeEngine().then(function(appRunner) {
-                appRunner.runApp();
-            });
-        },
-        serviceWorkerSettings: {
-            serviceWorkerVersion: '{{flutter_service_worker_version}}',
-        },
-      });
-    });
+        window.addEventListener('load', function(ev) {
+          _flutter.loader.load({
+            config: {},
+            onEntrypointLoaded: function(engineInitializer) {
+                engineInitializer.initializeEngine().then(function(appRunner) {
+                    appRunner.runApp();
+                });
+            },
+            serviceWorkerSettings: {
+                serviceWorkerVersion: '{{flutter_service_worker_version}}',
+            },
+          });
+        });
 
 </script>
 </body>

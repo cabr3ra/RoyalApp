@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:royal_app/constants/colors.dart';
 import 'package:royal_app/service/game_service.dart';
+import 'package:royal_app/service/game_service2.dart';
 
 class WeeklyCalendar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<GameService>(
+    return Consumer<GameService2>(
       builder: (context, gameService, child) {
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -16,7 +17,7 @@ class WeeklyCalendar extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildWeekRows(GameService gameService) {
+  List<Widget> _buildWeekRows(GameService2 gameService) {
     final now = DateTime.now();
     final centralDay = now;
     final adjustedStartOfWeek = centralDay.subtract(Duration(days: 3));
@@ -35,7 +36,7 @@ class WeeklyCalendar extends StatelessWidget {
     ];
   }
 
-  bool _isDayCompleted(DateTime dayDate, GameService gameService) {
+  bool _isDayCompleted(DateTime dayDate, GameService2 gameService) {
     final startOfDay = DateTime(dayDate.year, dayDate.month, dayDate.day);
     final endOfDay = startOfDay.add(Duration(days: 1));
 
@@ -72,7 +73,7 @@ class WeeklyCalendar extends StatelessWidget {
   LinearGradient _getDayCircleGradient(bool completed, bool isToday) {
     if (completed) {
       return LinearGradient(
-        colors: [AppColors.colorCrown, Colors.black12],
+        colors: [AppColors.colorCrown, Colors.deepOrange],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       );

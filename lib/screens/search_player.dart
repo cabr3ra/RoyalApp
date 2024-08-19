@@ -46,18 +46,33 @@ class _SearchPlayerState extends State<SearchPlayer> {
     }
   }
 
-  // Método para realizar búsqueda de jugadores
-  void _performSearch(String query) {
+  // Método para realizar búsqueda de jugadores y obtener sus URLs de imágenes
+  void _performSearch(String query) async {
     if (query.isEmpty) {
       _clearSearchResults();
     } else {
-      _firestoreService.searchPlayers(query).then((results) {
+      try {
+        // Buscar jugadores en la base de datos
+        List<Player> results = await _firestoreService.searchPlayers(query);
+
+        // Cargar las URLs de las imágenes en paralelo
+        List<Future<Player>> imageFutures = results.map((player) async {
+          String imageUrl = await _storageService.getPlayerImageUrl(
+              player.name, player.surname);
+          player.imageUrl = imageUrl;
+          return player;
+        }).toList();
+
+        // Esperar a que todas las imágenes se carguen
+        List<Player> playersWithImages = await Future.wait(imageFutures);
+
+        // Actualizar el estado con los jugadores y sus URLs de imágenes
         setState(() {
-          _searchResults = results;
+          _searchResults = playersWithImages;
         });
-      }).catchError((error) {
-        print('Error searching players: $error');
-      });
+      } catch (error) {
+        print('Error al buscar jugadores: $error');
+      }
     }
   }
 
@@ -92,9 +107,8 @@ class _SearchPlayerState extends State<SearchPlayer> {
           onClear: _clearSearchResults,
         ),
         _buildSearchResultsContainer(),
-        Center(
-          child: AttemptsInfo(maxAttempts, _attemptedPlayers.length),
-        ),
+        SizedBox(height: 5),
+        _buildAttemptsInfo(),
         const SizedBox(height: 10),
         Expanded(
           child: ListView.builder(
@@ -132,11 +146,10 @@ class _SearchPlayerState extends State<SearchPlayer> {
         ),
         child: _searchResults.isNotEmpty
             ? _buildSearchResults()
-            : SizedBox(height: 40),
+            : SizedBox(height: 0),
       ),
     );
   }
-
 
   // Construye la lista de resultados de búsqueda
   Widget _buildSearchResults() {
@@ -145,6 +158,7 @@ class _SearchPlayerState extends State<SearchPlayer> {
       itemBuilder: (context, index) {
         Player player = _searchResults[index];
         return ListTile(
+          leading: _buildPlayerImage(player.imageUrl),
           title: Text(
             '${player.name} ${player.surname}',
             style: TextStyle(
@@ -160,5 +174,32 @@ class _SearchPlayerState extends State<SearchPlayer> {
         );
       },
     );
+  }
+
+  Widget _buildPlayerImage(String imageUrl) {
+    return Container(
+      width: 40,
+      height: 40,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Colors.white,
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(30),
+        child: imageUrl.isNotEmpty
+            ? Image.network(
+                imageUrl,
+                width: 40,
+                height: 40,
+                fit: BoxFit.cover,
+              )
+            : Icon(Icons.person, size: 40, color: Colors.grey),
+      ),
+    );
+  }
+
+  // Construye la información de intentos
+  Widget _buildAttemptsInfo() {
+    return AttemptsInfo(maxAttempts, _attemptedPlayers.length);
   }
 }

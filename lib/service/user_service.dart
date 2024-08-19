@@ -24,6 +24,9 @@ class UserService with ChangeNotifier {
         password: password,
       );
 
+      // Enviar correo de verificación
+      await userCredential.user!.sendEmailVerification();
+
       // Crear un perfil de usuario inicial en Firestore
       UserData user = UserData(
         id: userCredential.user!.uid,
@@ -36,7 +39,6 @@ class UserService with ChangeNotifier {
 
       return null;
     } on FirebaseAuthException catch (e) {
-      // Manejar errores de autenticación
       switch (e.code) {
         case 'email-already-in-use':
           return 'El correo electrónico ya está en uso.';
@@ -55,15 +57,31 @@ class UserService with ChangeNotifier {
   // Método para iniciar sesión con un usuario existente
   Future<String?> signIn(String email, String password) async {
     try {
+      UserCredential userCredential =
       await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
+
+      if (!userCredential.user!.emailVerified) {
+        return 'Por favor, verifica tu correo electrónico antes de iniciar sesión.';
+      }
+
       return null;
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case 'user-not-found':
+          return 'Usuario no encontrado.';
+        case 'wrong-password':
+          return 'Contraseña incorrecta.';
+        default:
+          return 'Error al iniciar sesión. Inténtelo de nuevo.';
+      }
     } catch (e) {
-      return e.toString();
+      return 'Error desconocido: ${e.toString()}';
     }
   }
+
 
   // Método para cerrar sesión
   Future<void> signOut() async {
@@ -147,6 +165,21 @@ class UserService with ChangeNotifier {
   Future<void> updateUserPoints(int points) async {
     if (_userData != null) {
       await updateUser(username: _userData!.username, points: points);
+    }
+  }
+
+  // Método para obtener el conteo de usuarios
+  Future<int> getUserCount() async {
+    try {
+      final QuerySnapshot snapshot = await _firestore.collection('users').get();
+      int userCount = snapshot.size;
+
+      print('Total de usuarios: $userCount');
+
+      return userCount;
+    } catch (e) {
+      print('Error al obtener el conteo de usuarios: $e');
+      return 0;
     }
   }
 }

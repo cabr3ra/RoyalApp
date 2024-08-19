@@ -150,7 +150,7 @@ class _PlayerInfoRowState extends State<PlayerInfoRow> {
     );
   }
 
-  // Construye el widget de la imagen del jugador, mostrando un marcador de posición si la URL está vacía.
+  // Construye el widget de la imagen del jugador.
   Widget _buildPlayerImage(String imageUrl) {
     return Container(
       width: 60,

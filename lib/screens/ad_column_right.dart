@@ -1,9 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:royal_app/routing/routes.dart';
 import 'package:royal_app/service/user_service.dart';
+import 'package:royal_app/widgets/common/donation.dart';
+import 'package:royal_app/widgets/common/progress_bar.dart';
 
-class AdColumnRight extends StatelessWidget {
+class AdColumnRight extends StatefulWidget {
+  @override
+  _AdColumnRightState createState() => _AdColumnRightState();
+}
+
+class _AdColumnRightState extends State<AdColumnRight> {
+  int _userCount = 0;
+  static const int _goal = 1000;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserCount();
+  }
+
+  Future<void> _fetchUserCount() async {
+    final userService = Provider.of<UserService>(context, listen: false);
+    int userCount = await userService.getUserCount();
+    setState(() {
+      _userCount = userCount;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -18,14 +41,11 @@ class AdColumnRight extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Text widget with information
                   Padding(
                     padding: const EdgeInsets.all(16.0),
-                    // Add padding around the text
                     child: Text(
-                      '¡Hola! Soy 🍅, seguidor de la Kings y Queens League.\n\n'
-                      'Soy programador y decidí aportar mi granito de arena en esta liga de streamers.\n'
-                      'He creado esta web para que jugadores, presidentes, creadores de contenido disfruten.\n\n'
+                      '¡Hola! Soy 🍅, programador y seguidor de la Kings y Queens League.\n\n'
+                      'Decidí crear esta web para que jugadores, presidentes, creadores de contenido disfruten tanto como yo disfruté haciéndola.\n\n'
                       '¡Espero que les guste! 😄',
                       style: TextStyle(
                         fontSize: 12,
@@ -34,46 +54,19 @@ class AdColumnRight extends StatelessWidget {
                       textAlign: TextAlign.justify,
                     ),
                   ),
-                  ElevatedButton(
-                    onPressed: () => _handleSignOut(context),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          Colors.red, // Background color of the button
-                    ),
-                    child: Text(
-                      'Salir',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                      ),
-                    ),
+                  SizedBox(height: 10),
+                  ProgressBar(
+                    currentUsers: _userCount,
+                    goal: _goal,
                   ),
                 ],
               ),
             ),
           ),
-          Expanded(
-            child: Container(
-              color: Colors.transparent,
-              child: Center(
-                child: Text(
-                  '',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          ),
+          Donation(),
+          SizedBox(height: 80),
         ],
       ),
     );
-  }
-
-  void _handleSignOut(BuildContext context) async {
-    final userService = Provider.of<UserService>(context, listen: false);
-    await userService.signOut();
-    Navigator.pushReplacementNamed(context, Routes.login);
   }
 }

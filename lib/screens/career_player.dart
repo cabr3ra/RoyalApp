@@ -47,18 +47,33 @@ class _CareerPlayerState extends State<CareerPlayer> {
     }
   }
 
-  // Método para realizar búsqueda de jugadores
-  void _performSearch(String query) {
+  // Método para realizar búsqueda de jugadores y obtener sus URLs de imágenes
+  void _performSearch(String query) async {
     if (query.isEmpty) {
       _clearSearchResults();
     } else {
-      _firestoreService.searchPlayers(query).then((results) {
+      try {
+        // Buscar jugadores en la base de datos
+        List<Player> results = await _firestoreService.searchPlayers(query);
+
+        // Cargar las URLs de las imágenes en paralelo
+        List<Future<Player>> imageFutures = results.map((player) async {
+          String imageUrl = await _storageService.getPlayerImageUrl(
+              player.name, player.surname);
+          player.imageUrl = imageUrl;
+          return player;
+        }).toList();
+
+        // Esperar a que todas las imágenes se carguen
+        List<Player> playersWithImages = await Future.wait(imageFutures);
+
+        // Actualizar el estado con los jugadores y sus URLs de imágenes
         setState(() {
-          _searchResults = results;
+          _searchResults = playersWithImages;
         });
-      }).catchError((error) {
+      } catch (error) {
         print('Error al buscar jugadores: $error');
-      });
+      }
     }
   }
 
@@ -145,21 +160,45 @@ class _CareerPlayerState extends State<CareerPlayer> {
   Widget _buildSearchResults() {
     return ListView.builder(
       shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
       itemCount: _searchResults.length,
       itemBuilder: (context, index) {
         Player player = _searchResults[index];
         return ListTile(
+          leading: _buildPlayerImage(player.imageUrl),
           title: Text(
             '${player.name} ${player.surname}',
             style: TextStyle(
               color: Colors.white,
+              fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
           ),
           onTap: () => _selectPlayer(player),
         );
       },
+    );
+  }
+
+  // Construye el widget de la imagen del jugador
+  Widget _buildPlayerImage(String imageUrl) {
+    return Container(
+      width: 40,
+      height: 40,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Colors.white,
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(30),
+        child: imageUrl.isNotEmpty
+            ? Image.network(
+          imageUrl,
+          width: 40,
+          height: 40,
+          fit: BoxFit.cover,
+        )
+            : Icon(Icons.person, size: 40, color: Colors.grey),
+      ),
     );
   }
 

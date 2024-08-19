@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'package:royal_app/constants/firebase_options.dart';
+import 'package:royal_app/service/game_service2.dart';
 import 'package:royal_app/service/user_service.dart';
 import 'package:royal_app/service/game_service.dart';
 import 'package:royal_app/firebase/firestore_service.dart';
@@ -57,6 +58,18 @@ class RoyalApp extends StatelessWidget {
             return gameService;
           },
         ),
+
+        // Proveedor para GameService2
+        ChangeNotifierProxyProvider<UserService, GameService2>(
+          create: (context) => GameService2(
+            Provider.of<UserService>(context, listen: false),
+          ),
+          update: (context, userService, gameService) {
+            gameService!.updateUserService(userService);
+            return gameService;
+          },
+        ),
+
       ],
       child: MaterialApp(
         title: 'Royal App',
