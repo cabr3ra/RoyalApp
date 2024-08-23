@@ -74,7 +74,7 @@ class RoyalApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Royal App',
         routes: appRoutes,
-        initialRoute: Routes.login,
+        initialRoute: Routes.home,
         theme: ThemeData(
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,

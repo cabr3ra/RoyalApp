@@ -362,6 +362,6 @@ class _PlayerItemState extends State<PlayerItem> {
 
   // Determina si se debe mostrar el diálogo de fracaso
   bool _shouldShowFailureDialog() {
-    return widget.randomPlayer != null && widget.attempts >= 5;
+    return widget.randomPlayer != null && widget.attempts >= 8;
   }
 }

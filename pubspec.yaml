@@ -39,7 +39,7 @@ flutter:
     - assets/widgets/player.png
     - assets/widgets/profile.png
     - assets/widgets/ranking.png
-    - assets/widgets/search_player.png
+    - assets/widgets/search.png
     - assets/widgets/settings.png
-    - assets/widgets/question.png
+    - assets/widgets/career.png
     - assets/logo.png

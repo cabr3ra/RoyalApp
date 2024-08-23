@@ -47,7 +47,7 @@ class PrivacyPolicy extends StatelessWidget {
               SizedBox(height: 10),
               _sectionTitle(context, 'Contacto'),
               _listViewItems([
-                '• Si tienes alguna pregunta sobre esta política de privacidad, contáctanos a uri.tucody@gmail.com.',
+                '• Si tienes alguna pregunta sobre esta política de privacidad, contáctanos a royalappcontact@gmail.com.',
               ]),
             ],
           ),

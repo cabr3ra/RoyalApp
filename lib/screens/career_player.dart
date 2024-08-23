@@ -25,7 +25,7 @@ class _CareerPlayerState extends State<CareerPlayer> {
   List<Player> _searchResults = [];
   List<Player> _attemptedPlayers = [];
   Player? _randomPlayer;
-  static const int maxAttempts = 5;
+  static const int maxAttempts = 8;
   DateTime? _startTime;
 
   @override

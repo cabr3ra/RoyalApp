@@ -20,7 +20,20 @@ class AdColumnLeft extends StatelessWidget {
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(height: 50),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, Routes.login);
+                      },
+                      style: TextButton.styleFrom(
+                        foregroundColor: Colors.white, textStyle: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 1.2,
+                          textBaseline: TextBaseline.alphabetic,
+                        ),
+                      ),
+                      child: Text('INICIAR SESIÓN'),
+                    ),
                     Container(
                       padding: EdgeInsets.all(20),
                       decoration: BoxDecoration(
@@ -65,6 +78,7 @@ class AdColumnLeft extends StatelessWidget {
               height: 90,
               color: Colors.transparent,
               child: Center(
+                /*
                 child: ElevatedButton(
                   onPressed: () => _handleSignOut(context),
                   style: ElevatedButton.styleFrom(
@@ -79,7 +93,7 @@ class AdColumnLeft extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
+                ),*/
               ),
             ),
           ),

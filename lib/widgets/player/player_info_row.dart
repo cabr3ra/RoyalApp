@@ -100,7 +100,7 @@ class _PlayerInfoRowState extends State<PlayerInfoRow> {
 
   // Determina si se debe mostrar un diálogo de fracaso.
   bool _shouldShowFailureDialog() {
-    return widget.randomPlayer != null && widget.attempts >= 5;
+    return widget.randomPlayer != null && widget.attempts >= 8;
   }
 
   // Construye la fila que muestra la información del jugador.

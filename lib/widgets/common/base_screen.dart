@@ -144,7 +144,6 @@ class BaseScreen extends StatelessWidget {
     );
   }
 
-
   Widget _buildFooter(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
@@ -185,19 +184,27 @@ class BaseScreen extends StatelessWidget {
               const SizedBox(width: 16.0),
               GestureDetector(
                 onTap: () async {
-                  final Uri emailUri = Uri(
-                    scheme: 'mailto',
-                    path: 'uri.tucody@gmail.com',
-                  );
+                  final Uri emailUri =
+                      Uri(scheme: 'mailto', path: 'royalappcontact@gmail.com');
 
                   try {
                     if (await canLaunchUrl(emailUri)) {
                       await launchUrl(emailUri);
                     } else {
-                      print('No se puede abrir la aplicación de correo.');
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                              'No se puede abrir la aplicación de correo.'),
+                        ),
+                      );
                     }
                   } catch (e) {
-                    print('Error lanzando el correo: $e');
+                    // Error al lanzar la URL
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Error lanzando el correo: $e'),
+                      ),
+                    );
                   }
                 },
                 child: Text(
@@ -208,7 +215,7 @@ class BaseScreen extends StatelessWidget {
                     decoration: TextDecoration.underline,
                   ),
                 ),
-              ),
+              )
             ],
           ),
         ],
